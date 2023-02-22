@@ -3190,7 +3190,7 @@ main(int argc, char **argv)
     }
 #endif
 
-    infrastructure_network_startup(server_state);
+    infrastructure_network_startup(server_state->route_state);
 
     if (adv_ctl_init(server_state) != kDNSServiceErr_NoError) {
         ERROR("Can't start advertising proxy control server.");
