@@ -104,7 +104,7 @@ $(BUILDDIR)/dnssd-relay:  $(OBJDIR)/dnssd-relay.o $(DSOOBJS) $(IOOBJS) $(CFOBJS)
 $(BUILDDIR)/dnssd-proxy:  $(OBJDIR)/dnssd-proxy.o $(SIMPLEOBJS) $(DSOOBJS) $(MDNSOBJS) $(FROMWIREOBJS) $(IOOBJS) $(CFOBJS) $(OBJDIR)/srp-log.o
 	$(CC) -o $@ $+ $(SRPLDOPTS)
 
-$(BUILDDIR)/srp-client:	$(OBJDIR)/srp-ioloop.o $(OBJDIR)/srp-client.o $(OBJDIR)/dnssd_clientlib.o $(CTIOBJS) $(DSOOBJS) $(SIMPLEOBJS) $(IOWOTLSOBJS) $(CFOBJS)
+$(BUILDDIR)/srp-client:	$(OBJDIR)/srp-ioloop.o $(OBJDIR)/srp-client.o $(OBJDIR)/dnssd_clientlib.o $(CTIOBJS) $(DSOOBJS) $(SIMPLEOBJS) $(FROMWIREOBJS)  $(IOWOTLSOBJS) $(CFOBJS)
 	$(CC) -o $@ $+ $(SRPLDOPTS)
 
 $(BUILDDIR)/srp-dns-proxy:	$(OBJDIR)/srp-dns-proxy.o $(OBJDIR)/srp-parse.o $(SIMPLEOBJS) $(FROMWIREOBJS) $(IOOBJS) $(HMACOBJS) $(CFOBJS)
