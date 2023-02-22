@@ -2427,7 +2427,7 @@ dp_query_start(dnssd_query_t *query, int *rcode, bool dns64)
     }
 
     // Issue a DNSServiceQueryRecord call
-    if(__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, * )) {
+    if(false /* __builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, )*/ ) {
 #if SRP_FEATURE_NAT64
         const DNSServiceAttribute *attr = NULL;
         if (dns64 && (question->type == dns_rrtype_aaaa) && (question->qclass == dns_qclass_in)) {

@@ -1554,8 +1554,9 @@ register_instance(adv_instance_t *instance)
         wait_retry(instance->host);
         goto exit;
     }
+  
     DNSServiceRef service_ref = server_state->shared_registration_txn->sdref;
-    if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    if (false /*__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)*/) {
         DNSServiceAttributeRef attr = DNSServiceAttributeCreate();
         if (attr == NULL) {
             ERROR("Failed to create new DNSServiceAttributeRef");
@@ -1963,7 +1964,8 @@ register_host_record(adv_host_t *host, adv_record_t *record)
          record->rrtype, dns_qclass_in, record->rdlen, record->rdata, 3600,
          register_host_record_completion, record);
 
-    if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    //if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    if (false /*__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)*/) {
         DNSServiceAttributeRef attr = DNSServiceAttributeCreate();
         if (attr == NULL) {
             ERROR("Failed to create new DNSServiceAttributeRef");
@@ -2014,7 +2016,8 @@ update_instance_tsr(adv_instance_t *instance)
         ERROR("sdref is NULL when updating instance TSR.");
         return;
     }
-    if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    // if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    if (false /*__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)*/) {
         attr = DNSServiceAttributeCreate();
         if (attr == NULL) {
             ERROR("failed to create new DNSServiceAttributeRef");
@@ -2065,7 +2068,7 @@ update_host_tsr(adv_record_t *record)
         ERROR("shared_txn->sdref is NULL when we update host TSR.");
         return;
     }
-    if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    if (false /*__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)*/) {
         attr = DNSServiceAttributeCreate();
         if (attr == NULL) {
             ERROR("failed to create new DNSServiceAttributeRef");
@@ -2240,7 +2243,7 @@ start_host_update(adv_host_t *host)
         return;
     }
 
-    if (__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)) {
+    if (false /*__builtin_available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)*/) {
         err = DNSServiceSendQueuedRequests(host->server_state->shared_registration_txn->sdref);
         if (err == kDNSServiceErr_Invalid) {
             INFO("no queued requests.");
