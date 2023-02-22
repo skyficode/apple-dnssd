@@ -16,6 +16,7 @@
  */
 
 #include <string.h> /* memset */
+#include <stddef.h> /* NULL */
 #include <netinet/in.h>
 #include "dns-msg.h"
 #include "ioloop.h"
