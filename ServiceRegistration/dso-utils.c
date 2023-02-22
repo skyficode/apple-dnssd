@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+#include <string.h> /* memset */
 #include <netinet/in.h>
 #include "dns-msg.h"
 #include "ioloop.h"
