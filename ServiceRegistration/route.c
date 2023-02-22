@@ -3074,14 +3074,15 @@ refresh_interface_list(route_state_t *route_state)
 #if !defined(RA_TESTER)
 #if defined(POSIX_BUILD)
 static void
-wpan_reconnect_wakeup_callback(route_state_t *route_state)
+wpan_reconnect_wakeup_callback(void *context)
 {
+     route_state_t *route_state = context;
     if (route_state->wpan_reconnect_wakeup != NULL) {
         ioloop_wakeup_release(route_state->wpan_reconnect_wakeup);
         route_state->wpan_reconnect_wakeup = NULL;
     }
     // Attempt to restart the thread network...
-    infrastructure_network_startup(route_state);
+    infrastructure_network_startup(context);
 }
 #endif
 
@@ -3096,7 +3097,7 @@ attempt_wpan_reconnect(route_state_t *route_state)
             return;
         }
         INFO("delaying for ten seconds before attempt to reconnect to thread daemon.");
-        ioloop_add_wake_event(route_state->wpan_reconnect_wakeup, NULL,
+        ioloop_add_wake_event((wakeup_callback_t)route_state->wpan_reconnect_wakeup, NULL,
                               wpan_reconnect_wakeup_callback, NULL, 10 * 1000);
         partition_state_reset(route_state);
 #endif
