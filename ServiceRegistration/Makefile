@@ -93,7 +93,7 @@ clean:
 	@if test -d $(BUILDDIR) ; then rm -r $(BUILDDIR) ; fi
 
 SIMPLEOBJS   = $(OBJDIR)/towire.o $(SIGNOBJS)
-DSOOBJS      = $(OBJDIR)/dso.o $(OBJDIR)/dso-utils.o
+DSOOBJS      = $(OBJDIR)/dso.o $(OBJDIR)/dso-utils.o $(OBJDIR)/dso-transport.o
 MDNSOBJS     = $(OBJDIR)/dnssd_clientstub.o $(OBJDIR)/dnssd_ipc.o $(OBJDIR)/dnssd_clientlib.o
 FROMWIREOBJS = $(OBJDIR)/fromwire.o $(VERIFYOBJS) $(OBJDIR)/wireutils.o
 CFOBJS       = $(OBJDIR)/config-parse.o
@@ -125,6 +125,13 @@ $(BUILDDIR)/srputil:	$(OBJDIR)/srputil.o $(OBJDIR)/advertising_proxy_services.o 
 $(OBJDIR)/dso.o:	../DSO/dso.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
 
+$(OBJDIR)/dso-transport.o:	../DSO/dso-transport.c
+	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
+
+$(OBJDIR)/dso-utils.o:	dso-utils.c
+	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
+
+
 $(OBJDIR)/dnssd_clientstub.o:  ../mDNSShared/dnssd_clientstub.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
 
@@ -133,6 +140,7 @@ $(OBJDIR)/dnssd_clientlib.o:  ../mDNSShared/dnssd_clientlib.c
 
 $(OBJDIR)/dnssd_ipc.o:  ../mDNSShared/dnssd_ipc.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
+
 
 $(OBJDIR)/srputil.o: ../Clients/srputil/srputil.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
