@@ -57,7 +57,8 @@
 #include <dns_sd.h>
 #include <inttypes.h>
 #include <signal.h>
-
+#include <sys/stat.h>
+#include <sys/types.h>
 #ifdef IOLOOP_MACOS
 #include <xpc/xpc.h>
 
