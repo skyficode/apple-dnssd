@@ -23,13 +23,11 @@
 #include <net/if.h>
 #include <netinet/in.h>
 
-//#ifdef HAVE_LINUX
-// breaks musl building
-//#include <linux/socket.h>
-//#define IPV6_2292_PKTINFO  IPV6_2292PKTINFO
-//#define IPV6_2292_HOPLIMIT IPV6_2292HOPLIMIT
-//#else
-
+#ifdef HAVE_LINUX
+#include <linux/socket.h>
+#define IPV6_2292_PKTINFO  IPV6_2292PKTINFO
+#define IPV6_2292_HOPLIMIT IPV6_2292HOPLIMIT
+#else
 // The following are the supported non-linux posix OSes -
 // netbsd, freebsd and openbsd.
 #if HAVE_IPV6
