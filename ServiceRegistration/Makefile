@@ -93,7 +93,7 @@ clean:
 	@if test -d $(BUILDDIR) ; then rm -r $(BUILDDIR) ; fi
 
 SIMPLEOBJS   = $(OBJDIR)/towire.o $(SIGNOBJS)
-DSOOBJS      = $(OBJDIR)/dso.o $(OBJDIR)/dso-utils.o $(OBJDIR)/dso-transport.o
+DSOOBJS      = $(OBJDIR)/dso.o $(OBJDIR)/dso-utils.o 
 MDNSOBJS     = $(OBJDIR)/dnssd_clientstub.o $(OBJDIR)/dnssd_ipc.o $(OBJDIR)/dnssd_clientlib.o
 FROMWIREOBJS = $(OBJDIR)/fromwire.o $(VERIFYOBJS) $(OBJDIR)/wireutils.o
 CFOBJS       = $(OBJDIR)/config-parse.o
