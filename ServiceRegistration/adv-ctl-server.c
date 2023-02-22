@@ -335,6 +335,8 @@ adv_ctl_get_ula(advertising_proxy_conn_ref connection, void *context)
 static void
 adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
 {
+    uint16_t data_len;
+    void *data = NULL;
 	int status = kDNSSDAdvertisingProxyStatus_NoError;
 	cti_connection_parse_start(connection);
 	if (!cti_connection_u16_parse(connection, &connection->message_type)) {
@@ -388,8 +390,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
         adv_ctl_advertise_prefix(context);
         break;
     case kDNSSDAdvertisingProxyAddPrefix:
-        void *data = NULL;
-        uint16_t data_len;
+        
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyAddPrefix request.",
              connection->uid, connection->gid);
         if (!cti_connection_data_parse(connection, &data, &data_len)) {
@@ -407,7 +408,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
         }
         break;
     case kDNSSDAdvertisingProxyRemovePrefix:
-        void *data = NULL;
+        *data = NULL;
         uint16_t data_len;
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyRemovePrefix request.",
              connection->uid, connection->gid);
