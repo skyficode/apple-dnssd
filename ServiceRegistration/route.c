@@ -33,7 +33,7 @@
 #define _GNU_SOURCE
 #include <netinet/in.h>
 #include <fcntl.h>
-#include <bsd/stdlib.h>
+// #include <bsd/stdlib.h>  // GNU_SOURCE gets hit but linux... comment out for now
 #include <net/if.h>
 #endif
 #include <sys/socket.h>
