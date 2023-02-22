@@ -3074,14 +3074,14 @@ refresh_interface_list(route_state_t *route_state)
 #if !defined(RA_TESTER)
 #if defined(POSIX_BUILD)
 static void
-wpan_reconnect_wakeup_callback(void *context)
+wpan_reconnect_wakeup_callback(route_state_t *route_state)
 {
-    if (context->wpan_reconnect_wakeup != NULL) {
-        ioloop_wakeup_release(context->wpan_reconnect_wakeup);
-        context->wpan_reconnect_wakeup = NULL;
+    if (route_state->wpan_reconnect_wakeup != NULL) {
+        ioloop_wakeup_release(route_state->wpan_reconnect_wakeup);
+        route_state->wpan_reconnect_wakeup = NULL;
     }
     // Attempt to restart the thread network...
-    infrastructure_network_startup(context);
+    infrastructure_network_startup(route_state);
 }
 #endif
 
