@@ -3097,7 +3097,7 @@ attempt_wpan_reconnect(route_state_t *route_state)
             return;
         }
         INFO("delaying for ten seconds before attempt to reconnect to thread daemon.");
-        ioloop_add_wake_event((wakeup_callback_t)route_state->wpan_reconnect_wakeup, NULL,
+        ioloop_add_wake_event(route_state->wpan_reconnect_wakeup, NULL,
                               wpan_reconnect_wakeup_callback, NULL, 10 * 1000);
         partition_state_reset(route_state);
 #endif
