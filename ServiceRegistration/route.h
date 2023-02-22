@@ -352,7 +352,7 @@ struct route_state {
 
 #if !defined(RA_TESTER)
     wakeup_t *NULLABLE wpan_reconnect_wakeup;
-#endif !defined(RA_TESTER)
+#endif // !defined(RA_TESTER)
 #if !defined(RA_TESTER)
     uint64_t partition_last_prefix_set_change;
     uint64_t partition_last_pref_id_set_change;
