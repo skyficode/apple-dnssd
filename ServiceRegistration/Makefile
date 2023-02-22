@@ -128,10 +128,6 @@ $(OBJDIR)/dso.o:	../DSO/dso.c
 $(OBJDIR)/dso-transport.o:	../DSO/dso-transport.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
 
-$(OBJDIR)/dso-utils.o:	dso-utils.c
-	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
-
-
 $(OBJDIR)/dnssd_clientstub.o:  ../mDNSShared/dnssd_clientstub.c
 	$(CC) -o $@ $(SRPCFLAGS) $(CFLAGS) -c -I. $(INCLUDEDIRS) $<
 
