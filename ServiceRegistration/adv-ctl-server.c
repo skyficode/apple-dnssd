@@ -338,7 +338,7 @@ adv_ctl_get_ula(advertising_proxy_conn_ref connection, void *context)
 }
 
 static void
-adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
+adv_ctl_message_parse(advertising_proxy_conn_ref connection)
 {
     uint16_t data_len;
     void *data = NULL;
@@ -347,6 +347,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
 	if (!cti_connection_u16_parse(connection, &connection->message_type)) {
 		return;
 	}
+    void* context = NULL;
 	switch(connection->message_type) {
     case kDNSSDAdvertisingProxyEnable:
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyEnable request.",
@@ -525,8 +526,8 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     }
     ioloop_add_reader(connection->io_context, adv_ctl_read_callback);
     connection->context = context;
-    connection->callback = (void*) NULL;
-    connection->internal_callback = (void*) NULL;
+    connection->callback = (cti_callback_t *) NULL;
+    connection->internal_callback = (cti_internal_callback_t*) NULL;
     return;
 }
 
