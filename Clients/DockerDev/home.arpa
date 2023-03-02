@@ -1,0 +1,59 @@
+$ORIGIN home.arpa.
+$TTL 5m 
+
+@       IN      SOA     discoveryproxy.home.arpa.  ( nobody.
+                                      2002081601 ; Serial
+                                      2880      ; Refresh
+                                      1440      ; Retry
+                                      60480     ; Expire - 1 week
+                                      8640 )    ; Minimum
+                IN      NS      dns
+                IN      A       2.2.2.2 
+
+dns             IN      A       2.2.2.2
+ones            IN      A       1.1.1.1
+twos            IN      A       2.2.2.2
+eights          IN      A       8.8.8.8
+nines           IN      A       9.9.9.9
+
+; 1. Domain Enumeration
+;
+; These records invite clients to browse this domain.
+; (The '@' sign means "the current domain" --
+; i.e. the domain being described by this zone file.)
+
+b._dns-sd._udp  IN PTR @   ;  b = browse domain
+lb._dns-sd._udp IN PTR @   ; lb = legacy browse domain
+; (domain that will be used for clients that don't specify a domain to browse)
+
+; 2. List of named service entities
+;
+; These records list the named 'http' service entities we want clients
+; to be able to discover. You can use upper-case, punctuation,
+; UTF-8 rich text, etc., in service names, but certain punctuation
+; like spaces and dots needs to be escaped with a backslash in the
+; name server zone file (on the wire it's sent as raw data, not escaped).
+
+_http._tcp  PTR DNS-SD\ Example._http._tcp
+
+; 3. SRV & TXT records describing each service entity named above
+;
+; These records tell clients how to access the named 'http' service entities
+; listed above. In the example below, fill in the correct host name.
+; If it's a fully qualified host name, it needs to end with a dot, as shown.
+; If it's a partial host name relative to the current zone (e.g. just "ne-info",
+; with the remainder of the name being implicit) then don't end it with a dot.
+; The "path=/xxx" in the TXT record tells the web browser the specific
+; page on the server it should request in its "HTTP GET" command.
+; Often, but not always, the path will be just "/".
+
+; 4. Support Discovery Proxy
+
+; Specify the server which handles DNS updates for your zone,
+; typically port 53 on the same server as above.
+; If you're going to be running dnsextd (see below) then the port number is typically 5352
+_dns-update._udp IN SRV 0 0 5353 dns
+
+; 5. Add PTR records telling clients that they can browse and register here
+r._dns-sd._udp  IN PTR @   ;  "r" = registration domain
+

@@ -1,0 +1,6 @@
+interface en0 service.home.arpa.
+my-name dns.home.arpa.
+my-ipv4-addr 2.2.2.2
+udp-port 5353
+tcp-port 5353
+tls-port 5853
