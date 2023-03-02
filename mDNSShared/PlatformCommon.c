@@ -26,7 +26,11 @@
 #include <sys/socket.h>         // Needed for socket() etc.
 #include <netinet/in.h>         // Needed for sockaddr_in
 #include <syslog.h>
+#if( TARGET_OS_DARWIN )
 #include <sys/fcntl.h>
+#else
+#include <fcntl.h>
+#endif
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <time.h>

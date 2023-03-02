@@ -79,7 +79,7 @@ install: all
 	$(INSTALL) -D $(BUILDDIR)/srp-mdns-proxy $(INSTALL_PREFIX)/sbin/srp-mdns-proxy
 	$(INSTALL) -D $(BUILDDIR)/keydump $(INSTALL_PREFIX)/bin/keydump
 	$(INSTALL) -D $(BUILDDIR)/dnssd-proxy $(INSTALL_PREFIX)/sbin/dnssd-proxy
-	$(INSTALL) -D $(BUILDDIR)/srp-dns-proxy $(INSTALL_PREFIX)/sbin/srp-dns-proxy
+#	$(INSTALL) -D $(BUILDDIR)/srp-dns-proxy $(INSTALL_PREFIX)/sbin/srp-dns-proxy
 #	$(INSTALL) -D $(BUILDDIR)/dnssd-relay $(INSTALL_PREFIX)/sbin/dnssd-relay
 
 # 'setup' sets up the build directory structure the way we want
