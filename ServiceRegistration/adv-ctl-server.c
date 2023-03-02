@@ -529,7 +529,7 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     #ifdef NO_IOLOOP
     connection->callback.next = NULL;
     #else
-    connection->callback.callback = NULL;
+    connection->callback->callback = NULL;
     #endif
     connection->internal_callback = NULL;
     return;
