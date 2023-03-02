@@ -434,7 +434,10 @@ cti_read(cti_connection_t connection, cti_datagram_callback_t datagram_callback,
 		return;
 	}
 	// We have finished reading a message.
-	datagram_callback(connection, context);
+	if (context != NULL) {
+		syslog(LOG_ERR, "cti_read_callback: unimplemented! provided context but unused");
+	}
+	datagram_callback(connection);
 
 	// Read the next one.
 	connection->input.expected = 2;
