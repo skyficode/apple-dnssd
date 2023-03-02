@@ -14248,7 +14248,7 @@ mDNSexport mStatus mDNS_StopQueryWithRemoves(mDNS *const m, DNSQuestion *const q
             {
                 // Don't use mDNS_DropLockBeforeCallback() here, since we don't allow API calls
                 if (question->QuestionCallback)
-                    question->QuestionCallback(m, question, &cr->resrec, mDNSfalse);
+                    question->QuestionCallback(m, question, &cr->resrec, (QC_result) mDNSfalse);
             }
         }
     }
@@ -15192,7 +15192,7 @@ mDNSexport void mDNS_DeactivateNetWake_internal(mDNS *const m, NetworkInterfaceI
         if (m->SPSBrowseCallback)
         {
             mDNS_DropLockBeforeCallback();      // Allow client to legally make mDNS API calls from the callback
-            m->SPSBrowseCallback(m, &set->NetWakeBrowse, mDNSNULL, mDNSfalse);
+            m->SPSBrowseCallback(m, &set->NetWakeBrowse, mDNSNULL, (QC_result) mDNSfalse);
             mDNS_ReclaimLockAfterCallback();    // Decrement mDNS_reentrancy to block mDNS API calls again
         }
 
