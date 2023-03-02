@@ -111,23 +111,13 @@ adv_ctl_advertise_prefix(void *context)
 #if( TARGET_OS_DARWIN ) 
 static int
 adv_ctl_prefix_add_remove(void *context, xpc_object_t request, bool add)
-#else
-static int
-adv_ctl_prefix_add_remove(void *context, void* request, bool add)
-#endif
 {
     int status = kDNSSDAdvertisingProxyStatus_NoError;
     srp_server_t *server_state = context;
     const uint8_t *data;
     size_t data_len;
 
-#if( TARGET_OS_DARWIN ) 
     data = xpc_dictionary_get_data(request, "data", &data_len);
-#else
-    // and since we don't know the type, force error on POSIX, for now
-    data = request
-    data_len = 0;
-#endif
     if (data != NULL && data_len == 16) {
         SEGMENTED_IPv6_ADDR_GEN_SRP(data, prefix_buf);
         INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
@@ -144,6 +134,7 @@ adv_ctl_prefix_add_remove(void *context, void* request, bool add)
     }
     return status;
 }
+#endif
 
 static int
 adv_ctl_stop_advertising_service(void *context)
@@ -240,12 +231,12 @@ static bool
 adv_ctl_list_services(advertising_proxy_conn_ref connection, void *context)
 {
     srp_server_t *server_state = context;
-    adv_host_t *hosts;
+    adv_host_t *host;
     int i;
     int64_t now = ioloop_timenow();
 	int num_hosts = 0;
 
-	for (host = hosts; host != NULL; host = host->next) {
+	for (host = server_state->hosts; host != NULL; host = host->next) {
 		num_hosts++;
 	}
 	if (!cti_connection_message_create(connection, kDNSSDAdvertisingProxyResponse, 200) ||
@@ -534,8 +525,8 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     }
     ioloop_add_reader(connection->io_context, adv_ctl_read_callback);
     connection->context = context;
-    connection->callback = NULL;
-    connection->internal_callback = NULL;
+    connection->callback = (void*) NULL;
+    connection->internal_callback = (void*) NULL;
     return;
 }
 
