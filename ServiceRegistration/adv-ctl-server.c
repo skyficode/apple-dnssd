@@ -105,15 +105,29 @@ adv_ctl_advertise_prefix(void *context)
     return status;
 }
 
+
+// unsure about this one... looks unused, so may not matter
+// but if really xpc_object_t, that's trickier for POSIX
+#if( TARGET_OS_DARWIN ) 
 static int
 adv_ctl_prefix_add_remove(void *context, xpc_object_t request, bool add)
+#else
+static int
+adv_ctl_prefix_add_remove(void *context, void* request, bool add)
+#endif
 {
     int status = kDNSSDAdvertisingProxyStatus_NoError;
     srp_server_t *server_state = context;
     const uint8_t *data;
     size_t data_len;
 
+#if( TARGET_OS_DARWIN ) 
     data = xpc_dictionary_get_data(request, "data", &data_len);
+#else
+    // and since we don't know the type, force error on POSIX, for now
+    data = request
+    data_len = 0;
+#endif
     if (data != NULL && data_len == 16) {
         SEGMENTED_IPv6_ADDR_GEN_SRP(data, prefix_buf);
         INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
@@ -226,7 +240,7 @@ static bool
 adv_ctl_list_services(advertising_proxy_conn_ref connection, void *context)
 {
     srp_server_t *server_state = context;
-    adv_host_t *host;
+    adv_host_t *hosts;
     int i;
     int64_t now = ioloop_timenow();
 	int num_hosts = 0;
@@ -400,7 +414,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
             if (data != NULL && data_len == 16) {
                 SEGMENTED_IPv6_ADDR_GEN_SRP(data, prefix_buf);
                 INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
-                status = adv_ctl_add_prefix(context, data);
+                adv_ctl_add_prefix(context, data);  // returns void, should have status?
             } else {
                 ERROR("invalid add prefix request, data[%p], data_len[%ld]", data, data_len);
                 status = kDNSSDAdvertisingProxyStatus_BadParam;
@@ -408,7 +422,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
         }
         break;
     case kDNSSDAdvertisingProxyRemovePrefix:
-        *data = NULL;
+        // *data = NULL;  // should still be null here
         uint16_t data_len;
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyRemovePrefix request.",
              connection->uid, connection->gid);
@@ -419,7 +433,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
             if (data != NULL && data_len == 16) {
                 SEGMENTED_IPv6_ADDR_GEN_SRP(data, prefix_buf);
                 INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
-                status = adv_ctl_add_prefix(context, data);
+                adv_ctl_add_prefix(context, data); // returns void, should have status?
             } else {
                 ERROR("invalid add prefix request, data[%p], data_len[%ld]", data, data_len);
                 status = kDNSSDAdvertisingProxyStatus_BadParam;
@@ -465,7 +479,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection, void *context)
     case kDNSSDAdvertisingProxyStartDroppingPushConnections:
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyStartDroppingPushConnections request.",
              connection->uid, connection->gid);
-        dp_start_smashing();
+        dp_start_dropping();  // was dp_start_smashing(), should be?
         break;
 
 	default:
@@ -483,7 +497,7 @@ adv_ctl_read_callback(io_t *UNUSED io, void *context)
 {
     advertising_proxy_conn_ref connection = context;
 
-    cti_read(connection, adv_ctl_message_parse);
+    cti_read(connection, adv_ctl_message_parse, context);
 }
 
 static void
@@ -520,7 +534,7 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     }
     ioloop_add_reader(connection->io_context, adv_ctl_read_callback);
     connection->context = context;
-    connection->callback.callback = NULL;
+    connection->callback = NULL;
     connection->internal_callback = NULL;
     return;
 }
@@ -538,7 +552,7 @@ adv_ctl_listen(srp_server_t *server_state)
     }
 
     server_state->adv_ctl_listener = ioloop_file_descriptor_create(fd, server_state, NULL);
-    if (server_state->listener == NULL) {
+    if (server_state->adv_ctl_listener == NULL) {
         ERROR("adv_ctl_listener: no memory for io_t object.");
 		close(fd);
         return kDNSSDAdvertisingProxyStatus_NoMemory;

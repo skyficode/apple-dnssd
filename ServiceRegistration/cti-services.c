@@ -124,7 +124,7 @@ cti_connection_read_callback(io_t *UNUSED io, void *context)
 {
     cti_connection_t connection = context;
 
-    cti_read(connection, cti_message_parse);
+    cti_read(connection, cti_message_parse, context);
 }
 
 void

@@ -397,7 +397,7 @@ cti_send_response(cti_connection_t connection, int status)
 }
 
 void
-cti_read(cti_connection_t connection, cti_datagram_callback_t datagram_callback)
+cti_read(cti_connection_t connection, cti_datagram_callback_t datagram_callback, void *context)
 {
 	size_t needed = connection->input.expected - connection->input.current;
 	if (needed > 0) {
@@ -434,7 +434,7 @@ cti_read(cti_connection_t connection, cti_datagram_callback_t datagram_callback)
 		return;
 	}
 	// We have finished reading a message.
-	datagram_callback(connection);
+	datagram_callback(connection, context);
 
 	// Read the next one.
 	connection->input.expected = 2;

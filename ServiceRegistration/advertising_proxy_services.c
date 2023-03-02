@@ -145,7 +145,7 @@ adv_read_callback(io_t *UNUSED io, void *context)
 {
     cti_connection_t connection = context;
 
-    cti_read(connection, adv_message_parse);
+    cti_read(connection, adv_message_parse, context);
 }
 
 static void

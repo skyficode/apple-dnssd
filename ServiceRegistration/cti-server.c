@@ -353,7 +353,7 @@ cti_fd_process(fd_set *r)
 
     for (connection = connections; connection; connection = connection->next) {
         if (connection->fd != -1 && FD_ISSET(connection->fd, r)) {
-            cti_read(connection, cti_message_parse);
+            cti_read(connection, cti_message_parse, NULL);
         }
     }
 }

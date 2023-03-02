@@ -93,7 +93,7 @@ bool cti_connection_parse_done(cti_connection_t NONNULL connection);
 bool cti_connection_message_create(cti_connection_t NONNULL connection, int message_type, uint16_t space);
 bool cti_connection_message_send(cti_connection_t NONNULL connection);
 bool cti_send_response(cti_connection_t NONNULL connection, int status);
-void cti_read(cti_connection_t NONNULL connection, cti_datagram_callback_t NONNULL datagram_callback);
+void cti_read(cti_connection_t NONNULL connection, cti_datagram_callback_t NONNULL datagram_callback, void *context);
 cti_connection_t NULLABLE cti_connection_allocate(uint16_t expected_size);
 int cti_make_unix_socket(const char *NONNULL sockname, size_t name_size, bool is_listener);
 int cti_accept(int listen_fd, uid_t *NULLABLE p_uid, gid_t *NULLABLE p_gid, pid_t *NULLABLE p_pid);
