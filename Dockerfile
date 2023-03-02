@@ -1,10 +1,8 @@
-## BUILDER CONTAINER
-
-# build some code needed for container, in a local container first... (required buildx / BuildKit)
 FROM alpine:3.17
 
 # include build tools, mbedtls, and DNS BIND9 
 RUN apk add alpine-sdk build-base mbedtls-dev libdispatch libdispatch-dev linux-headers bind mbedtls-utils
+
 
 # BIND runs a user "named", so adjust permissions accordingly
 RUN chgrp -R -L -c -v named /var/bind && \
@@ -25,6 +23,16 @@ COPY ./Clients/DockerDev/home.arpa.zone /var/bind/pri/home.arpa.zone
 # add Apple Discovery Proxy (e.g. dnsextd++)  
 COPY ./Clients/DockerDev/dnssd-proxy.cf /etc/dnssd-proxy.cf
 
+# copy the source to build
+COPY ./ /usr/src/mDNSResponder/
 
-# launch BIND, "named"
+RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration && \
+    make os=linux -C /usr/src/mDNSResponder/mDNSPosix
+
+# TODO:
+# - add "make install"
+# - use script to start named & discovery proxy
+
+# but launch BIND, "named", to keep container running 
 CMD ["named", "-c", "/var/bind/named.conf", "-g", "-u", "named"]
+
