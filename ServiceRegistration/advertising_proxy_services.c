@@ -373,9 +373,10 @@ advertising_proxy_add_prefix(advertising_proxy_conn_ref *conn_ref, run_context_t
                              advertising_proxy_reply callback, const uint8_t *prefix_buf, size_t buf_len)
 {
     advertising_proxy_error_type errx;
-    errx = adv_send_command_with_data(conn_ref, client_queue, "advertising_proxy_add_prefix",
+    // TODO was adv_send_command_with_data
+    errx = adv_send_command(conn_ref, client_queue, "advertising_proxy_add_prefix",
                                       kDNSSDAdvertisingProxyAddPrefix, callback, NULL, 0,
-                                      prefix_buf, buf_len);
+                                      (char*)prefix_buf, (int)buf_len);
     return errx;
 }
 
@@ -384,9 +385,10 @@ advertising_proxy_remove_prefix(advertising_proxy_conn_ref *conn_ref, run_contex
                                 advertising_proxy_reply callback, const uint8_t *prefix_buf, size_t buf_len)
 {
     advertising_proxy_error_type errx;
-    errx = adv_send_command_with_data(conn_ref, client_queue, "advertising_proxy_remove_prefix",
+    // TODO was adv_send_command_with_data
+    errx = adv_send_command(conn_ref, client_queue, "advertising_proxy_remove_prefix",
                                       kDNSSDAdvertisingProxyRemovePrefix, callback, NULL, 0,
-                                      prefix_buf, buf_len);
+                                      (char*)prefix_buf, (int)buf_len);
     return errx;
 }
 
