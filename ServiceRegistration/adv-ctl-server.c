@@ -526,7 +526,11 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     }
     ioloop_add_reader(connection->io_context, adv_ctl_read_callback);
     connection->context = context;
-    connection->callback = (void *) NULL;
+    #ifdef NO_IOLOOP
+    connection->callback.next = NULL;
+    #else
+    connection->callback.callback = NULL;
+    #endif
     connection->internal_callback = NULL;
     return;
 }
