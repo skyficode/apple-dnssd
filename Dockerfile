@@ -1,7 +1,7 @@
 FROM alpine:3.17
 
 # include build tools, mbedtls, and DNS BIND9 
-RUN apk add alpine-sdk build-base mbedtls-dev libdispatch libdispatch-dev linux-headers bind mbedtls-utils
+RUN apk add alpine-sdk build-base mbedtls-dev libdispatch libdispatch-dev linux-headers musl-nscd-dev bind mbedtls-utils
 
 
 # BIND runs a user "named", so adjust permissions accordingly
