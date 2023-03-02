@@ -488,7 +488,7 @@ adv_ctl_read_callback(io_t *UNUSED io, void *context)
 {
     advertising_proxy_conn_ref connection = context;
 
-    cti_read(connection, adv_ctl_message_parse, context);
+    cti_read(connection, adv_ctl_message_parse, NULL);
 }
 
 static void
