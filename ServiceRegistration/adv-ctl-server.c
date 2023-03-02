@@ -528,9 +528,7 @@ adv_ctl_listen_callback(io_t *UNUSED io, void *context)
     connection->context = context;
 
     // TODO: resolve defines/types later
-    #ifdef 0 
-    connection->callback.callback = NULL;
-    #endif
+    // connection->callback.callback = NULL;
 
     connection->internal_callback = NULL;
     return;
