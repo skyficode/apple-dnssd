@@ -26,11 +26,8 @@
 #include <sys/socket.h>         // Needed for socket() etc.
 #include <netinet/in.h>         // Needed for sockaddr_in
 #include <syslog.h>
-#if( TARGET_OS_DARWIN )
-#include <sys/fcntl.h>
-#else
-#include <fcntl.h>
-#endif
+#include <fcntl.h>              // POSIX !== "sys/fcntl.h" 
+// #include <sys/fcntl.h>       // and at least xcode does not need sys either...
 #include <netinet/tcp.h>
 #include <arpa/inet.h>
 #include <time.h>

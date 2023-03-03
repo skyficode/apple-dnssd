@@ -412,7 +412,12 @@ extern int yylineno;
 
 void yyerror( void* context, const char *str )
 {
-        fprintf( stderr,"%s:%d: error: %s\n", g_filename, yylineno, str );
+	// TODO: figure out if context is really str...
+	// (and MacOS builder does not like unused vars, so have to use context somehow)
+	if (context == NULL) {
+        fprintf( stderr, "%s:%d: error: TODO got context in yyerror", g_filename, yylineno);
+    }
+    fprintf( stderr,"%s:%d: error: %s\n", g_filename, yylineno, str );
 }
  
 int yywrap()
