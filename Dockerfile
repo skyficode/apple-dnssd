@@ -14,6 +14,10 @@ RUN gen_key type=rsa rsa_keysize=4096 filename=server.key
 RUN cert_write selfsign=1 issuer_key=server.key issuer_name=CN=dns.home.arpa not_before=20230101000000 not_after=20251231000000 is_ca=1 max_pathlen=0 output_file=server.crt
 RUN mv server.key server.crt /etc/dnssd-proxy
 
+# Apple's mDNSResponder uses different names for mbedtls tools, just link them
+RUN ln -s /usr/bin/gen_key /usr/local/bin/mbedtls_gen_key && \
+    ln -s /usr/bin/cert_write /usr/local/bin/mbedtls_cert_write
+
 # add BIND's main configuration, "named.conf"
 COPY ./Clients/DockerDev/named.conf /var/bind/named.conf
 
@@ -26,12 +30,15 @@ COPY ./Clients/DockerDev/dnssd-proxy.cf /etc/dnssd-proxy.cf
 # copy the source to build
 COPY ./ /usr/src/mDNSResponder/
 
+# now build all the mDNSResponder code
 RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration && \
-    make os=linux -C /usr/src/mDNSResponder/mDNSPosix
+    make os=linux -C /usr/src/mDNSResponder/mDNSPosix && \
+    make dnsextd -C /usr/src/mDNSResponder/mDNSPosix && \
+    make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
+    make install -C /usr/src/mDNSResponder/ServiceRegistration
 
 # TODO:
-# - add "make install"
-# - use script to start named & discovery proxy
+# - start named+dnsextd and/or discovery proxy etc
 
 # but launch BIND, "named", to keep container running 
 CMD ["named", "-c", "/var/bind/named.conf", "-g", "-u", "named"]

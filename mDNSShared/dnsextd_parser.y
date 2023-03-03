@@ -23,9 +23,9 @@
 #include "DebugServices.h"
 #include "dnsextd.h"
 
-void yyerror( const char* error );
+void yyerror( void* context, const char* error );
 int  yylex(void);
-
+int  yyparse(void* context);
 
 typedef struct StringListElem
 {
@@ -82,7 +82,6 @@ static ZoneSpec			*	g_zones;
 static ZoneSpec				g_zoneSpec;
 static const char		*	g_filename;
 
-#define YYPARSE_PARAM  context
 
 void
 SetupOptions
@@ -92,6 +91,8 @@ SetupOptions
 	);
 
 %}
+
+%parse-param {void* context}
 
 %union
 {
@@ -409,7 +410,7 @@ int yywrap(void);
 
 extern int yylineno;
 
-void yyerror( const char *str )
+void yyerror( void* context, const char *str )
 {
         fprintf( stderr,"%s:%d: error: %s\n", g_filename, yylineno, str );
 }
@@ -476,7 +477,7 @@ ParseConfig
 	yyin = fopen( file, "r" );
 	require_action( yyin, exit, err = 0 );
 
-	err = yyparse( ( void* ) d );
+	err = yyparse( d );
 	require_action( !err, exit, err = 1 );
 
 	for ( zoneSpec = g_zones; zoneSpec; zoneSpec = zoneSpec->next )
