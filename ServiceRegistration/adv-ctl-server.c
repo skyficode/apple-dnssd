@@ -415,7 +415,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection)
         break;
     case kDNSSDAdvertisingProxyRemovePrefix:
         // *data = NULL;  // should still be null here
-        uint16_t data_len;
+        // uint16_t data_len; // and this is already defined...
         INFO("Client uid %d pid %d sent a kDNSSDAdvertisingProxyRemovePrefix request.",
              connection->uid, connection->gid);
         if (!cti_connection_data_parse(connection, &data, &data_len)) {
