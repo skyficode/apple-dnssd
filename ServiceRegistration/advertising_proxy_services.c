@@ -109,7 +109,7 @@ adv_message_parse(cti_connection_t connection)
         goto out;
     }
     if (connection->message_type != kDNSSDAdvertisingProxyResponse) {
-        syslog(LOG_ERR, "adv_message_parse: unexpected message type %d", connection->message_type);
+        ERROR("adv_message_parse: unexpected message type %d", connection->message_type);
         err = kDNSSDAdvertisingProxyStatus_Disconnected;
         goto out;
     }
