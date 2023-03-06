@@ -408,7 +408,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection)
                 INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
                 adv_ctl_add_prefix(context, data);  // returns void, should have status?
             } else {
-                ERROR("invalid add prefix request, data[%p], data_len[%ld]", data, data_len);
+                ERROR("invalid add prefix request, data[%p], data_len[%" PRIu16 "]", data, data_len);
                 status = kDNSSDAdvertisingProxyStatus_BadParam;
             }
         }
@@ -427,7 +427,7 @@ adv_ctl_message_parse(advertising_proxy_conn_ref connection)
                 INFO("got prefix " PRI_SEGMENTED_IPv6_ADDR_SRP, SEGMENTED_IPv6_ADDR_PARAM_SRP(data, prefix_buf));
                 adv_ctl_add_prefix(context, data); // returns void, should have status?
             } else {
-                ERROR("invalid add prefix request, data[%p], data_len[%ld]", data, data_len);
+                ERROR("invalid add prefix request, data[%p], data_len[%" PRIu16 "]", data, data_len);
                 status = kDNSSDAdvertisingProxyStatus_BadParam;
             }
         }
