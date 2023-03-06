@@ -71,18 +71,18 @@
 
     #ifdef LOG_FPRINTF_STDERR
         #define OPENLOG(progname, consolep) do { (void)(consolep); (void)progname; } while (0)
-        #define ERROR(fmt, ...) fprintf(stderr, "%s: " #fmt "\n", __FUNCTION__, ##__VA_ARGS__)
-        #define INFO(fmt, ...)  fprintf(stderr, "%s: " #fmt "\n", __FUNCTION__, ##__VA_ARGS__)
-        #define FAULT(fmt, ...) fprintf(stderr, "%s: " #fmt "\n", __FUNCTION__, ##__VA_ARGS__)
+        #define ERROR(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
+        #define INFO(fmt, ...)  fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
+        #define FAULT(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
         #ifdef DEBUG_VERBOSE
             #ifdef IOLOOP_MACOS
                 int get_num_fds(void);
             #endif // ifdef IOLOOP_MACOS
-            #define DEBUG(fmt, ...) fprintf(stderr, "%s: " #fmt "\n", __FUNCTION__, ##__VA_ARGS__)
+            #define DEBUG(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
         #else // ifdef DEBUG_VERBOSE
             #define DEBUG(fmt, ...)
         #endif
-        #define FAULT(fmt, ...) fprintf(stderr, "%s: " #fmt "\n", __FUNCTION__, ##__VA_ARGS__)
+        #define FAULT(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
     #else // ifdef LOG_FPRINTF_STDERR
         #include <syslog.h>
 
