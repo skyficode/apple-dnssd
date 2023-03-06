@@ -71,9 +71,9 @@
 
     #ifdef LOG_FPRINTF_STDERR
         #define OPENLOG(progname, consolep) do { (void)(consolep); (void)progname; } while (0)
-        #define ERROR(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
-        #define INFO(fmt, ...)  fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
-        #define FAULT(fmt, ...) fprintf(stderr, "%s: "#fmt"\n", __FUNCTION__, ##__VA_ARGS__)
+        #define ERROR(fmt, ...) fprintf(stderr, "%s: "##fmt##"\n", __FUNCTION__, ##__VA_ARGS__)
+        #define INFO(fmt, ...)  fprintf(stderr, "%s: "##fmt##"\n", __FUNCTION__, ##__VA_ARGS__)
+        #define FAULT(fmt, ...) fprintf(stderr, "%s: "##fmt##"\n", __FUNCTION__, ##__VA_ARGS__)
         #ifdef DEBUG_VERBOSE
             #ifdef IOLOOP_MACOS
                 int get_num_fds(void);
