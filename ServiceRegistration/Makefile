@@ -36,7 +36,7 @@ TLSOBJS      = $(OBJDIR)/tls-macos.o
 IOOBJS       = $(OBJDIR)/ioloop.o $(OBJDIR)/posix.o $(OBJDIR)/ioloop-common.o
 IOWOTLSOBJS  = $(OBJDIR)/ioloop.o $(OBJDIR)/posix.o
 else ifeq ($(os), linux)
-SRPCFLAGS = -DMDNS_UDS_SERVERPATH=\"/var/run/mdnsd\" -O0 -g -Wall -Werror -DSTANDALONE -I../mDNSCore -I/usr/local/include -I. -I../mDNSMacOSX/Private $(INCLUDEDIRS) -I../DSO -MMD -MF .depfile-${notdir $@} -DNOT_HAVE_SA_LEN -DUSE_SELECT -DUSE_INOTIFY -DGENKEY_PROGRAM=$(GENKEY) -DCERTWRITE_PROGRAM=$(CERTWRITE) -DLINUX -DSRP_CRYPTO_MBEDTLS -DPOSIX_BUILD -DMDNS_NO_STRICT
+SRPCFLAGS = -DLOG_FPRINTF_STDERR -DMDNS_UDS_SERVERPATH=\"/var/run/mdnsd\" -O0 -g -Wall -Werror -DSTANDALONE -I../mDNSCore -I/usr/local/include -I. -I../mDNSMacOSX/Private $(INCLUDEDIRS) -I../DSO -MMD -MF .depfile-${notdir $@} -DNOT_HAVE_SA_LEN -DUSE_SELECT -DUSE_INOTIFY -DGENKEY_PROGRAM=$(GENKEY) -DCERTWRITE_PROGRAM=$(CERTWRITE) -DLINUX -DSRP_CRYPTO_MBEDTLS -DPOSIX_BUILD -DMDNS_NO_STRICT
 #SRPLDOPTS = /usr/local/lib/libmbedtls.a /usr/local/lib/libmbedx509.a /usr/local/lib/libmbedcrypto.a -lbsd
 SRPLDOPTS = -lmbedcrypto -lmbedtls -lmbedx509
 HMACOBJS     = $(OBJDIR)/hmac-mbedtls.o
