@@ -28,14 +28,16 @@ RUN ln -s /usr/bin/gen_key /usr/local/bin/mbedtls_gen_key && \
 # COPY ./Clients/DockerDev/dnssd-proxy.cf /etc/dnssd-proxy.cf
 
 # copy the source to build
-# COPY ./ /usr/src/mDNSResponder/
+COPY ./ /usr/src/mDNSResponder/
 
 # now build all the mDNSResponder code
-RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration && \
-    make os=linux -C /usr/src/mDNSResponder/mDNSPosix && \
-    make dnsextd -C /usr/src/mDNSResponder/mDNSPosix && \
-    make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
-    make install -C /usr/src/mDNSResponder/ServiceRegistration
+RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# && \
+RUN make os=linux -C /usr/src/mDNSResponder/mDNSPosix 
+# && \
+# make dnsextd -C /usr/src/mDNSResponder/mDNSPosix && \
+# make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
+# make install -C /usr/src/mDNSResponder/ServiceRegistration
 
 # TODO:
 # - start named+dnsextd and/or discovery proxy etc
