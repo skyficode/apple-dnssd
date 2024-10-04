@@ -32,7 +32,7 @@ COPY ./ /usr/src/mDNSResponder/
 
 # now build all the mDNSResponder code
 RUN make os=linux -C /usr/src/mDNSResponder/mDNSPosix 
-RUN make dnsextd -C /usr/src/mDNSResponder/mDNSPosix 
+// RUN make dnsextd -C /usr/src/mDNSResponder/mDNSPosix 
 RUN make srp-client os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 RUN make srp-mdns-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 RUN make dnssd-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
