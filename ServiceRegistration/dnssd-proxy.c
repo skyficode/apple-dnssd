@@ -47,8 +47,8 @@
 #include <ifaddrs.h>
 #include <net/if.h>
 #include <stdarg.h>
-#include <notify.h>
 #ifdef IOLOOP_MACOS
+#include <notify.h>
 #include <AssertMacros.h>
 #include <SystemConfiguration/SystemConfiguration.h>
 #endif // #ifdef IOLOOP_MACOS
