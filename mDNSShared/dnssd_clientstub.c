@@ -2066,7 +2066,8 @@ DNSServiceErrorType DNSServiceRegisterInternal
     put_rdata(txtLen, txtRecord, &ptr);
     if (attr)
     {
-        put_attribute_tlvs(attr, hdr, &ptr, limit);
+        // fix for Alpine - no "limit"
+        put_attribute_tlvs(attr, hdr, &ptr, NULL);
     }
 
     err = deliver_request(hdr, *sdRef);     // Will free hdr for us
@@ -2399,7 +2400,8 @@ DNSServiceErrorType DNSServiceRegisterRecordInternal
     put_uint32(ttl, &ptr);
     if (attr)
     {
-        put_attribute_tlvs(attr, hdr, &ptr, limit);
+        // fix for Alpine - not "limit" defined
+        put_attribute_tlvs(attr, hdr, &ptr, NULL);
     }
     if (flags & kDNSServiceFlagsQueueRequest)
     {
