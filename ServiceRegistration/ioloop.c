@@ -209,6 +209,14 @@ drop_writer(io_t *io)
 }
 
 static void
+wakeup_finalize(void *context)
+{
+    wakeup_t *wakeup = context;
+    add_remove_wakeup(wakeup, true);
+    free(wakeup);
+}
+
+static void
 add_remove_wakeup(wakeup_t *wakeup, bool remove)
 {
     wakeup_t **p_wakeups;
@@ -218,7 +226,8 @@ add_remove_wakeup(wakeup_t *wakeup, bool remove)
         ;
     if (remove) {
         void *wakeup_context = wakeup->context;
-        finalize_callback_t finalize = wakeup->finalize;
+        // fix for Alpine
+        /* finalize_callback_t finalize =*/ wakeup->finalize;
         wakeup->context = NULL;
         if (wakeup->finalize != NULL) {
             wakeup->finalize = NULL;
@@ -234,14 +243,6 @@ add_remove_wakeup(wakeup_t *wakeup, bool remove)
             wakeup->next = NULL;
         }
     }
-}
-
-static void
-wakeup_finalize(void *context)
-{
-    wakeup_t *wakeup = context;
-    add_remove_wakeup(wakeup, true);
-    free(wakeup);
 }
 
 void
