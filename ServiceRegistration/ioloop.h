@@ -404,13 +404,14 @@ void srp_format_time_offset(char *NONNULL buf, size_t buf_len, time_t offset);
 
 const struct sockaddr *NULLABLE connection_get_local_address(message_t *NULLABLE message);
 
-#if !UDP_LISTENER_USES_CONNECTION_GROUPS
+#if !defined(IOLOOP_MACOS) || !UDP_LISTENER_USES_CONNECTION_GROUPS
 bool ioloop_udp_send_message(comm_t *NONNULL comm, addr_t *NULLABLE source, addr_t *NONNULL dest, int ifindex,
                              struct iovec *NONNULL iov, int iov_len);
 void ioloop_udp_read_callback(io_t *NONNULL io, void *NULLABLE context);
 #endif
 int get_num_fds(void);
 
+void wakeup_finalize(void *context);
 
 // Local Variables:
 // mode: C

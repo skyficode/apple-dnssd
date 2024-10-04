@@ -34,7 +34,7 @@
 #include "dso-utils.h"
 #include "dso.h"
 
-#include "cti-services.h"
+// #include "cti-services.h"
 
 static int lease_time = 0;
 static bool random_leases = false;
