@@ -72,7 +72,9 @@ else
 SRPCFLAGS=$(os) $(os_id)
 endif
 
-all:	setup $(BUILDDIR)/srp-client $(BUILDDIR)/srp-mdns-proxy $(BUILDDIR)/keydump $(BUILDDIR)/dnssd-proxy $(BUILDDIR)/cti-server $(BUILDDIR)/srputil # $(BUILDDIR)/srp-dns-proxy $(BUILDDIR)/dnssd-relay
+all:	setup $(BUILDDIR)/srp-client $(BUILDDIR)/srp-mdns-proxy $(BUILDDIR)/keydump $(BUILDDIR)/dnssd-proxy $(BUILDDIR)/srputil # $(BUILDDIR)/srp-dns-proxy $(BUILDDIR)/dnssd-relay
+# fix for Alpine - was in all
+# $(BUILDDIR)/cti-server
 
 install: all
 	$(INSTALL) -D $(BUILDDIR)/srp-client $(INSTALL_PREFIX)/sbin/srp-client
@@ -98,6 +100,9 @@ MDNSOBJS     = $(OBJDIR)/dnssd_clientstub.o $(OBJDIR)/dnssd_ipc.o $(OBJDIR)/dnss
 FROMWIREOBJS = $(OBJDIR)/fromwire.o $(VERIFYOBJS) $(OBJDIR)/wireutils.o
 CFOBJS       = $(OBJDIR)/config-parse.o
 CTIOBJS      = $(OBJDIR)/cti-services.o $(OBJDIR)/cti-proto.o
+// fix for Alpine
+undefine CTIOBJS
+
 $(BUILDDIR)/dnssd-relay:  $(OBJDIR)/dnssd-relay.o $(DSOOBJS) $(IOOBJS) $(CFOBJS)
 	$(CC) -o $@ $+ $(SRPLDOPTS)
 
