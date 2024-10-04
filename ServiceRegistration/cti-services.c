@@ -34,9 +34,15 @@
 #include <netinet/in.h>
 #include <net/if.h>
 #include <arpa/inet.h>
-#include <netinet6/in6_var.h>
-#include <netinet/icmp6.h>
-#include <netinet6/nd6.h>
+#ifdef __APPLE__
+    #include <netinet6/in6_var.h>
+    #include <netinet/icmp6.h>
+    #include <netinet6/nd6.h>
+#else
+    #include <linux/in6.h>
+    // #include <netinet/ip6.h>
+    // #include <netinet/icmp6.h>
+#endif
 #include "xpc_clients.h"
 #include "cti-services.h"
 typedef xpc_object_t object_t;
