@@ -31,7 +31,7 @@ RUN ln -s /usr/bin/gen_key /usr/local/bin/mbedtls_gen_key && \
 COPY ./ /usr/src/mDNSResponder/
 
 # now build all the mDNSResponder code
-RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+RUN make srp-client srp-mdns-proxy keydump dnssd-proxy srputil os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 # && \
 RUN make os=linux -C /usr/src/mDNSResponder/mDNSPosix 
 # && \
