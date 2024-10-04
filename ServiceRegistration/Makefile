@@ -100,7 +100,7 @@ MDNSOBJS     = $(OBJDIR)/dnssd_clientstub.o $(OBJDIR)/dnssd_ipc.o $(OBJDIR)/dnss
 FROMWIREOBJS = $(OBJDIR)/fromwire.o $(VERIFYOBJS) $(OBJDIR)/wireutils.o
 CFOBJS       = $(OBJDIR)/config-parse.o
 CTIOBJS      = $(OBJDIR)/cti-services.o $(OBJDIR)/cti-proto.o
-// fix for Alpine
+# fix for Alpine
 undefine CTIOBJS
 
 $(BUILDDIR)/dnssd-relay:  $(OBJDIR)/dnssd-relay.o $(DSOOBJS) $(IOOBJS) $(CFOBJS)
