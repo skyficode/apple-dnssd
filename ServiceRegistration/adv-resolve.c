@@ -22,7 +22,11 @@
 
 #include <netdb.h>
 #include <dns_sd.h>
-#include <os/log.h>
+#ifdef __APPLE__
+    #include <os/log.h> // For os_log related APIs
+#else
+    #include "srp-log.h"
+#endif // #ifdef __APPLE__
 
 #include "srp.h"
 #include "advertising_proxy_services.h"

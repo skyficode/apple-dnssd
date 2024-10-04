@@ -25,7 +25,12 @@
 #include <stdlib.h>
 
 #include <Block.h>
-#include <os/log.h>
+#ifdef __APPLE__
+    #include <os/log.h> // For os_log related APIs
+#else
+    #include "srp-log.h"
+#endif // #ifdef __APPLE__
+
 #include <netinet/in.h>
 #include <net/if.h>
 #include <arpa/inet.h>
