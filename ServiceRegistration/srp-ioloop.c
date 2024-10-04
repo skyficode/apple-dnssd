@@ -75,7 +75,9 @@ cti_connection_t thread_service_context;
 static const char *interface_name = NULL;
 static wakeup_t *wait_for_remote_disconnect = NULL;
 static dso_state_t *disconnect_expected = NULL;
-os_log_t global_os_log;
+
+// fix for Alpine - os_log_t unused & platform specific
+// os_log_t global_os_log;
 
 #define SRP_IO_CONTEXT_MAGIC 0xFEEDFACEFADEBEEFULL  // BEES!   Everybody gets BEES!
 typedef struct io_context {
