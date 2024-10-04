@@ -32,12 +32,15 @@ COPY ./ /usr/src/mDNSResponder/
 
 # now build all the mDNSResponder code
 RUN make os=linux -C /usr/src/mDNSResponder/mDNSPosix 
+RUN make setup srp-client srp-mdns-proxy keydump dnssd-proxy srputil -C /usr/src/mDNSResponder/ServiceRegistration 
+# $(BUILDDIR)/srp-dns-proxy $(BUILDDIR)/dnssd-relay
+
 # RUN make dnsextd -C /usr/src/mDNSResponder/mDNSPosix 
-RUN make srp-client os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
-RUN make srp-mdns-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
-RUN make dnssd-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
-RUN make keydump os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
-RUN make srputil os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# RUN make srp-client os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# RUN make srp-mdns-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# RUN make dnssd-proxy os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# RUN make keydump os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+# RUN make srputil os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 
 #RUN make dnssd-proxy srputil os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 RUN make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
