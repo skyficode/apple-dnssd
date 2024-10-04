@@ -89,6 +89,9 @@
 
 #include <dns_sd.h>
 
+#if !defined(NETDB_INTERNAL)
+    #define NETDB_INTERNAL (-1)
+#endif
 
 //----------
 // Public functions
