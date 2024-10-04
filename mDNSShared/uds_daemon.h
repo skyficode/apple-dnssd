@@ -32,6 +32,11 @@
 #include "signed_result.h"
 #endif
 
+// added for Alpine
+#ifndef MAX
+	#define MAX(A, B) (((A) > (B)) ? (A) : (B))
+#endif
+
 /* Client request: */
 
 // ***************************************************************************
