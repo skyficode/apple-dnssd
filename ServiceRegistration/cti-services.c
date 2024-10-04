@@ -34,16 +34,17 @@
 #include <netinet/in.h>
 #include <net/if.h>
 #include <arpa/inet.h>
+// fix for Alpine - BSD vs Linux
 #ifdef __APPLE__
     #include <netinet6/in6_var.h>
     #include <netinet/icmp6.h>
     #include <netinet6/nd6.h>
+    #include "xpc_clients.h"
 #else
     #include <linux/in6.h>
     // #include <netinet/ip6.h>
     // #include <netinet/icmp6.h>
 #endif
-#include "xpc_clients.h"
 #include "cti-services.h"
 typedef xpc_object_t object_t;
 typedef void (*cti_internal_callback_t)(cti_connection_t NONNULL conn_ref, object_t reply, cti_status_t status);
