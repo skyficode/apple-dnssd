@@ -21,7 +21,11 @@
 #include "ioloop.h"
 #include "srp-mdns-proxy.h"
 #include "nat64.h"
+//fix for Alpine
+#ifdef __APPLE__
 #include "nat64-macos.h"
+#endif
+
 #include "state-machine.h"
 #include "thread-service.h"
 #include "omr-watcher.h"

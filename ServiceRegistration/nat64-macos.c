@@ -18,7 +18,10 @@
 #include "dns-msg.h"
 #include "ioloop.h"
 #include "srp-mdns-proxy.h"
+//fix for Alpine
+#ifdef __APPLE__
 #include "nat64-macos.h"
+#endif
 #include "nat64.h"
 #include "interface-monitor-macos.h"
 #include "srp-log.h"

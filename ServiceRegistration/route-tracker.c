@@ -47,7 +47,10 @@
 #include "cti-services.h"
 #include "route.h"
 #include "nat64.h"
+//fix for Alpine
+#ifdef __APPLE__
 #include "nat64-macos.h"
+#endif
 #include "adv-ctl-server.h"
 #include "state-machine.h"
 #include "thread-service.h"

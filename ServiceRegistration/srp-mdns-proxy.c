@@ -35,6 +35,7 @@
 #include <inttypes.h>
 #include <sys/resource.h>
 #include <ctype.h>
+//fix for Alpine
 #ifdef __APPLE__
     #include <mdns/pf.h>
 #endif
@@ -54,7 +55,10 @@
 #include "srp-replication.h"
 #include "ioloop-common.h"
 #include "thread-device.h"
+//fix for Alpine
+#ifdef __APPLE__
 #include "nat64-macos.h"
+#endif
 #include "srp-dnssd.h"
 #include "ifpermit.h"
 #include "state-machine.h"
