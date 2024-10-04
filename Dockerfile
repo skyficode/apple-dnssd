@@ -31,13 +31,13 @@ RUN ln -s /usr/bin/gen_key /usr/local/bin/mbedtls_gen_key && \
 COPY ./ /usr/src/mDNSResponder/
 
 # now build all the mDNSResponder code
-#RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
+RUN make os=linux -C /usr/src/mDNSResponder/ServiceRegistration 
 # && \
 RUN make os=linux -C /usr/src/mDNSResponder/mDNSPosix 
 # && \
-# make dnsextd -C /usr/src/mDNSResponder/mDNSPosix && \
-# make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
-# make install -C /usr/src/mDNSResponder/ServiceRegistration
+RUN make dnsextd -C /usr/src/mDNSResponder/mDNSPosix && \
+RUN make InstalledLib InstalledClients -C /usr/src/mDNSResponder/mDNSPosix && \
+RUN make install -C /usr/src/mDNSResponder/ServiceRegistration
 
 # TODO:
 # - start named+dnsextd and/or discovery proxy etc
