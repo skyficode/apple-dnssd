@@ -35,7 +35,9 @@
 #include <inttypes.h>
 #include <sys/resource.h>
 #include <ctype.h>
-#include <mdns/pf.h>
+#ifdef __APPLE__
+    #include <mdns/pf.h>
+#endif
 
 #include "srp.h"
 #include "dns-msg.h"
